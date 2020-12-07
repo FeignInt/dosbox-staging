@@ -39,16 +39,18 @@ static void init_fluid_dosbox_settings(Section_prop &secprop)
 {
 	constexpr auto when_idle = Property::Changeable::WhenIdle;
 
-	// Name 'default.sf2' picks the default soundfont if it's installed
-	// it the OS. Usually it's Fluid_R3.
-	auto *str_prop = secprop.Add_string("soundfont", when_idle, "default.sf2");
+	// Name 'default' picks the default soundfont if it's installed
+	// Usually it's Fluid_R3.
+	auto *str_prop = secprop.Add_string("soundfont", when_idle, "default");
 	str_prop->Set_help(
-	        "Path to a SoundFont file in .sf2 format. You can use an\n"
-	        "absolute or relative path, or the name of an .sf2 inside\n"
-	        "the 'soundfonts' directory within your DOSBox configuration\n"
-	        "directory.\n"
+	        "Path to a SoundFont file. You can use an absolute or relative path,\n"
+	        "or simply the name of a soundfont and known directories will be searched\n"
+	        "sf2 (uncompressed) format has priority over sf3 (compressed)\n"
+	        "explicitly including the file extension overrides this\n"
+	        "e.g. 'MuseScore_General_Full.sf3'\n"
+	        "But in general is not required\n"
 	        "An optional percentage will scale the SoundFont's volume.\n"
-	        "For example: 'soundfont.sf2 50' will attenuate it by 50 percent.\n"
+	        "For example: 'soundfont 50' will attenuate it by 50 percent.\n"
 	        "The scaling percentage can range from 1 to 500.");
 
 	auto *int_prop = secprop.Add_int("synth_threads", when_idle, 1);
@@ -138,6 +140,7 @@ static std::deque<std::string> get_data_dirs()
 	        xdg_data_home + "/dosbox/soundfonts/",
 	        xdg_data_home + "/soundfonts/",
 	        xdg_data_home + "/sounds/sf2/",
+	        xdg_data_home + "/sounds/sf3/",
 	};
 
 	// Second priority are the $XDG_DATA_DIRS
@@ -153,6 +156,7 @@ static std::deque<std::string> get_data_dirs()
 		const auto resolved_dir = CROSS_ResolveHome(xdg_data_dir);
 		dirs.emplace_back(resolved_dir + "/soundfonts/");
 		dirs.emplace_back(resolved_dir + "/sounds/sf2/");
+		dirs.emplace_back(resolved_dir + "/sounds/sf3/");
 	}
 
 	// Third priority is $XDG_CONF_HOME, for convenience
@@ -169,7 +173,11 @@ static std::string find_sf_file(const std::string &name)
 	if (path_exists(sf_path))
 		return sf_path;
 	for (const auto &dir : get_data_dirs()) {
-		for (const auto &sf : {dir + name, dir + name + ".sf2"}) {
+		for (const auto &sf : {dir + name,
+		                       dir + name + ".sf2",
+		                       dir + name + "-GM.sf2",
+		                       dir + name + ".sf3",
+		                       dir + name + "-GM.sf3"}) {
 			// DEBUG_LOG_MSG("MIDI: FluidSynth checking if '%s' exists", sf.c_str());
 			if (path_exists(sf))
 				return sf;
