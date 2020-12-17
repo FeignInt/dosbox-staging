@@ -1,0 +1,85 @@
+# various files
+inout.h
+
+#include/dos_inc.h:169: strat ==> start, strata
+strat);
+
+#include/paging.h:64: readd ==> re-add, read
+#include/paging.h:284: readd ==> re-add, read
+readd(
+
+#src/cpu/core_dynrec/decoder.h:166: DAA ==> DATA
+: DAA missing
+#src/cpu/core_full/load.h:491: DAA ==> DATA
+#src/cpu/core_normal/prefix_none.h: DAA ==> DATA
+DAA()
+/* DAA */
+
+#src/cpu/instructions.h: ANDD ==> AND
+ANDD(
+ANDD)
+#src/cpu/core_dynrec/risc_mipsel32.h: seh ==> she
+// seh reg, reg
+arch that lacks seh
+
+#src/cpu/core_normal/prefix_0f.h: BA ==> BY, BE
+#src/cpu/core_normal/prefix_66_0f.h: BA ==> BY, BE
+:BA:
+
+#src/cpu/core_normal/prefix_66.h: ADDD ==> ADD
+#src/cpu/instructions.h: ADDD ==> ADD
+ADDD)
+ADDD(
+
+#src/libs/decoders/stb.h: fo ==> of, for
+obj fo,
+(fo);
+
+#src/libs/decoders/stb_vorbis.h: finalY ==> finally, finale
+*finalY
+finalY[
+
+#src/cpu/paging.cpp: readd ==> re-add, read
+#src/hardware/vga_memory.cpp: readd ==> re-add, read
+readd(
+
+#src/debug/debug_disasm.cpp:194: daa ==> data
+"daa",
+
+#src/dos/dos_memory.cpp:79: strat ==> start, strata
+ strat)
+(strat&
+= strat;
+
+#src/dos/dos_misc.cpp:163: struc ==> struct
+// get size of data struc
+
+#src/dos/dos_programs.cpp:1867: hda ==> had
+=hda,
+
+#src/libs/decoders/dr_mp3.h: ba ==> by, be
+ba =
+= ba
+[ba*
+uint8 ba;
+? ba :
+(ba 
+ ba)
+
+#src/libs/decoders/dr_mp3.h: ist ==> is, it, its, it's, sit, list
+ist =
+ ist;
+= ist*
+
+#src/libs/decoders/opus.cpp: ot ==> to, of, or
+* ot =
+(ot !=
+
+#src/libs/decoders/stb.h: bloc ==> block
+*bloc =
+bloc[
+,bloc)
+
+# Binary Junk, TODO separate file?
+tE<.t!<\t
+DMA number oThe High DMA
