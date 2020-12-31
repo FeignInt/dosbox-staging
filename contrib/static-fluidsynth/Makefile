@@ -89,7 +89,7 @@ fluidsynth/build/Makefile: fluidsynth/build
 	-Denable-ladspa=0 \
 	-Denable-lash=0 \
 	-Denable-libinstpatch=0 \
-	-Denable-libsndfile=0 \
+	-Denable-libsndfile=1 \
 	-Denable-midishare=0 \
 	-Denable-network=0 \
 	-Denable-oss=0 \
@@ -123,8 +123,8 @@ export FLUIDSYNTH_CFLAGS="-I$(CURDIR)/include $(GLIB_CFLAGS)"
 export FLUIDSYNTH_LIBS="$(CURDIR)/lib/libfluidsynth.a $(GLIB_LIBS) -lm"
 endef
 
-GLIB_LIBS = $(shell pkg-config --libs gthread-2.0 glib-2.0)
-GLIB_CFLAGS = $(shell pkg-config --cflags gthread-2.0 glib-2.0)
+GLIB_LIBS = $(shell pkg-config --libs gthread-2.0 glib-2.0 sndfile)
+GLIB_CFLAGS = $(shell pkg-config --cflags gthread-2.0 glib-2.0 sndfile)
 .PHONY: fluidsynth-message
 fluidsynth-message: lib/libfluidsynth.a
 	$(info $(FLUIDSYNTH_EXPORTS))
