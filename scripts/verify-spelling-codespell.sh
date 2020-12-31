@@ -51,12 +51,38 @@ main()
 
 codepell_version()
 {
-  >/dev/null type -p codespell ||
-    {
-      >&2 printf "%s\n" "codespell command not found"
-      exit 127 # same as bash: command not found
-    }
-  >&2 printf "codespell version: %s\n" "$( codespell --version )"
+  local -a min_cs_version cs_version
+
+  # version >= 2.0.0 required, for --ignore-regex
+  min_cs_version=( 2 0 0 )
+
+  readarray -t -d. cs_version < <( codespell --version )
+
+  >&2 printf "codespell version: %s.%s.%s\n" "${cs_version[@]:-Not found}"
+
+  for ((i=0;i<${#min_cs_version[@]};i++)); do
+    (( cs_version[i] >= min_cs_version[i] )) || {
+      local IFS="${IFS/#/.}"
+      >&2 cat <<-EOF
+	codespell >= ${min_cs_version[*]} required
+	On Debian Bullseye / Ubuntu Hirsute and later:
+
+	    sudo apt install codespell
+
+	Older Debian/Ubuntu install via pip (Tested with Ubuntu Focal):
+
+	    sudo apt update
+	    sudo apt install python3-pip codespell-
+	    sudo pip3 install codespell
+
+	Note the trailing '-' which marks for removal
+
+	For further information on installing codespell refer to:
+	    https://github.com/codespell-project/codespell
+
+	EOF
+  exit 1;}
+  done
 }
 
 get_file_list()
