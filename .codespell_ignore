@@ -78,7 +78,7 @@ ist =
 #src/libs/decoders/stb.h: bloc ==> block
 *bloc =
 bloc[
-,bloc)
+bloc)
 
 # Binary Junk, TODO separate file?
 tE<.t!<\t
