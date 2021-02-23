@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (C) 2020  Feignint <feignint@gmail.com>
+# Copyright (C) 2020-2021  Feignint <feignint@gmail.com>
 # SPDX-License-Identifier: GPL-2.0-or-later
 
 # Utilises codespell https://github.com/codespell-project/codespell
@@ -214,9 +214,17 @@ load_ignore_regex()
 
 check_binary()
 {
-  [[ -e "${binary:=src/dosbox}" ]] ||
+  [[ -e "${binary:=build/dosbox}" ]] ||
     {
       >&2 printf '"%s" does not exist.. skipped\n' "${binary}"
+      >&2 printf '%s\n' "set custom binary to check with:" \
+                        "--binary path/to/binaryfile"
+      return 0
+    }
+
+  [[ "$( file -b -i "${binary}")" =~ application/.+executable.+binary ]] ||
+    {
+      >&2 printf '"%s" is not a binary file.. skipped\n' "${binary}"
       return 0
     }
 
