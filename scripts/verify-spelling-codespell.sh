@@ -39,6 +39,9 @@ main()
         files="git-ref $( 2>/dev/null git describe "${auto_parent:-$2}" )"
         shift 2
       ;;
+      errors)
+        only_errors="true"
+      ;;
     esac
     shift 1 || :
   done
@@ -197,8 +200,10 @@ _github_PR()
         ( # subshell for easy reset of errlevel
           [[ "${TYPO_FIX# }" =~ ^(${bin_filter})$ ]] && (( errlevel ++ ))
           # TODO different output format for when not github CI
-          printf "::%s file=%s,line=%d::%s:%s\n" \
-                 "${errlevels[$errlevel]}" "$FN" "$LN" "$FN" "$TYPO_FIX"
+
+          [[ ${errlevel} -lt 2 && -n ${only_errors} ]] ||
+            printf "::%s file=%s,line=%d::%s:%s\n" \
+                   "${errlevels[$errlevel]}" "$FN" "$LN" "$FN" "$TYPO_FIX"
         )
     done < <( hunk_ranges )
   done < <( codespell --ignore-regex "(${ignore_regex})" "${check_files[@]}" )
