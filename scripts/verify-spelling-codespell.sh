@@ -19,7 +19,7 @@ main()
       ;;
       binary)
         binary="$2"
-        shift 2
+        shift 1
       ;;
       base-git-ref)
         >&2 printf "%s " "looking for git ref $2 .."
@@ -37,7 +37,7 @@ main()
             }
         #>&2 printf "\n"
         files="git-ref $( 2>/dev/null git describe "${auto_parent:-$2}" )"
-        shift 2
+        shift 1
       ;;
       errors)
         only_errors="true"
